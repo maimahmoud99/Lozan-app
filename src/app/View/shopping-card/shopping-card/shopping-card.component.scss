@@ -1,0 +1,92 @@
+.cart-item img {
+    max-width: 100px;
+    height: auto;
+}
+
+.quantity-input {
+    width: 50px;
+}
+
+.cart-summary {
+
+    border-radius: 10px;
+}
+.btngeneric{
+    font-weight: bold;
+    font-size: 16px;
+    color: #DC2626;
+}
+.btngeneric:hover{
+background-color: #DC2626;
+color: #fff  !important;
+}
+.btnminus{
+    border-radius: 0;
+
+    border-top-right-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+  
+}
+.btnplus{
+    border-radius: 0;
+
+    border-top-left-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
+   
+
+}
+.shoppingCard input , .shoppingCard button {
+border-color: #000 !important;
+}
+
+.sicon-sar:before {
+    content: "\e9bc";
+}
+
+@media (max-width: 768px) {
+    /* تنسيقات للجوال */
+   .col-sm-4{
+    width: 30%;
+   }
+   .col-sm-8{
+    width: 70%;
+    margin-top: 20px;
+   }
+
+   .col-sm-6{
+    width: 50%;
+   }
+
+  }
+  @keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(6px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 0.4s ease-in;
+}
+#deleteDiv
+{
+    background-color: #22C55E;
+}
+
+ @keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+
+.animate-shake {
+  animation: shake 0.4s ease-in-out;
+}
+#showCustomError
+{
+    background-color: #F87171;
+}

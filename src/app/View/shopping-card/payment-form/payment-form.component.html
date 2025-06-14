@@ -1,0 +1,16 @@
+
+
+
+<ng-template #basicModal let-modal style="z-index:unset !important">
+    <button class="btn btn-outline-danger" style="color:#000 !important;font-weight:bold;" (click)="Close()" aria-label="Close">
+        تأكد من عملية الدفع اولا واغلق النافذة
+    </button>
+
+    <div class="modal-header">
+        <!-- <h2 class="modal-title" id="exampleModalLabel" style="color:#000">Login</h2> -->
+  
+    </div>
+    <div class="modal-body text-center " style="height: 600px;" *ngIf="Url">
+        <iframe  [src]="sanitizer.bypassSecurityTrustResourceUrl(this.Url)"  width="100%" height="90%"></iframe>
+   </div>
+</ng-template>

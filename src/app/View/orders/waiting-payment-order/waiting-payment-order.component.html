@@ -1,0 +1,37 @@
+<div class="row prod">
+    <h2 class="my-3 fw-bold">طلبات بأنتظار الدفع</h2>
+    <ng-container *ngFor="let item of ListOrders; let i=index">
+
+    <div class="card mt-2 ">
+        <div class="card-body row p-0 mt-3">
+            <div class="col-lg-3 col-sm-3">
+                <h6 class="card-title ">{{item.payment.transactionNumber}}</h6>
+
+            </div>
+            <div class="col-lg-5 col-sm-8">
+                <h6 class="card-title ">{{item.createdOn | date:'shortDate' }}</h6>
+                <p class="text-center">{{item.totalAmount}} <span class="fst-italic text-decoration-line-through">ريال</span></p>
+
+            </div>
+            <div class="col-lg-3 col-sm-8 sm-mt">
+                <button  (click)="CompletePayment(item.id)"  type="button" class=" inline-flex sm-w-full items-center justify-center rounded-lg bg-red-600 px-5 py-2.5 text-sm font-medium  text-white hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-red-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                    <i class="fas fa-pay mx-2"></i>
+                    دفع
+                  </button>
+                
+            </div>
+            <div class="col-lg-1 col-sm-3 sm-mt">
+                <button class="text-danger btn btn-outline-danger btngeneric d-inline-block  Pb-3  mb-2  float-start" (click)="ShowItems(item.id)">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div> 
+        </div>
+
+    </div>
+    </ng-container>
+
+</div>
+
+<app-payment-form [openModalTrigger]="openModal" [Url]="Url"></app-payment-form>
+
+<app-order-item [openModalTrigger]="openproductModal" [ListProduct]="ListProduct"></app-order-item>

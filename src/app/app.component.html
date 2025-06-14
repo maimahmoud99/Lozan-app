@@ -1,0 +1,17 @@
+<div class="w-full" >
+
+<app-index-navbar  *ngIf="shouldShowLayout()"></app-index-navbar> 
+<app-loader></app-loader>
+<router-outlet ></router-outlet> 
+<!-- <apple-pay-button buttonstyle="black" type="buy" (click)="onApplePayButtonClicked()" locale="en-US"></apple-pay-button> -->
+
+<!-- 
+<section class="header ccontainer page-container pt-16 items-center flex pb-16 my-5 w-full lg:w-12/12">
+</section> -->
+<app-footer  *ngIf="shouldShowLayout()"></app-footer> 
+
+<a  class="whats-app" href="https://wa.me/+966598886502" target="_blank">
+    <i class="fab fa-whatsapp my-float"></i>
+</a>
+
+</div>

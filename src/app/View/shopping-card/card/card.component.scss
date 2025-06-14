@@ -1,0 +1,56 @@
+@media (max-width: 768px) {
+    /* تنسيقات للجوال */
+    .sm-grid-cols-2{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.5rem !important;
+
+    }
+    .sm-grid-cols-2 img{
+        width: 90%;
+        height: 150px; 
+    }
+    .sm-grid-cols-2 .cartName{
+        font-size: 16px !important;
+        width: 100%;
+    }
+    .sm-grid-cols-2 .cardbutton{
+        font-size: 16px;
+        width: 100%;
+        padding:10px 0 !important;
+    }
+    .diplayMobilenone{
+        display: none;
+    }
+  }
+  @keyframes vertical-shake {
+  0% { transform: translateY(0); }
+  20% { transform: translateY(-8px); }
+  40% { transform: translateY(8px); }
+  60% { transform: translateY(-6px); }
+  80% { transform: translateY(6px); }
+  100% { transform: translateY(0); }
+}
+ .shake {
+  animation: shake 0.4s ease-in;
+}
+
+#successDiv
+{
+    background-color: #22C55E;
+}
+// .vertical-shake {
+//   animation: vertical-shake 0.5s ease-in-out;
+// }.progress-line {
+//   width: 100%;
+//   animation: progress-decrease 3s linear forwards;
+// }
+
+// @keyframes progress-decrease {
+//   from { width: 100%; }
+//   to { width: 0%; }
+// }
+
+#bag
+{
+    text-decoration: #22C55E;
+}

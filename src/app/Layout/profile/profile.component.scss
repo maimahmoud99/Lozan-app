@@ -1,0 +1,36 @@
+.btngeneric:hover{
+    background-color: #DC2626;
+    color: #fff  !important;
+    }
+
+    @media (max-width: 768px) {
+        /* تنسيقات للجوال */
+       .container{
+        width: 100%;
+       }
+       .prof {
+        padding: 10px 20px;
+       }
+     .prof .col-sm-3{
+        width: 25%;
+     }
+    .prof .col-sm-8{
+        width: 75%;
+     }
+     .prof img{
+        height: 50px ;
+     }
+     .fw-bold{
+        text-align: center;
+     }
+     .prof .sm-w-full{
+        width: 100%;
+        text-align: center;
+        margin: auto;
+     }
+     .prof .sm-mt{
+        margin:15px 0px;
+        text-align: center;
+
+     }
+      }

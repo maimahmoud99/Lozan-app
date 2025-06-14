@@ -1,0 +1,39 @@
+<div class="row prod">
+    <h2 class="my-3 fw-bold">طلباتي</h2>
+    <ng-container *ngFor="let item of ListOrders; let i=index">
+
+    <div class="card mt-2 ">
+        <div class="card-body row p-0 mt-3">
+            <div class="col-lg-1 col-sm-3">
+                <img src="assets/img/Madia.svg" *ngIf="item.paymentType == PaymentType.Madai" alt="Product 1" class="img-fluid rounded" width="100%" height="50px" >
+                <img src="assets/img/mastercard.png" *ngIf="item.paymentType == PaymentType.MasterCard" alt="Product 1" class="img-fluid rounded" width="100%" height="50px" >
+                <img src="assets/img/Visa.png" *ngIf="item.paymentType == PaymentType.Visa" alt="Product 1" class="img-fluid rounded" width="100%" height="50px" >
+                <img src="assets/img/paymentIcon.png" *ngIf="item.paymentType == PaymentType.Prepaid" alt="Product 1" class="img-fluid rounded" width="100%" height="50px" >
+
+            </div>
+            <div class="col-lg-6 col-sm-8">
+                <h6 class="card-title ">{{item.payment.transactionNumber}}</h6>
+                <p class="text-center">{{item.totalAmount}} <span class="fst-italic text-decoration-line-through">ريال</span></p>
+
+            </div>
+            <div class="col-lg-3 col-sm-8 sm-mt">
+                <h6 class="card-title ">{{item.orderDate | date:'shortDate'}}</h6>
+                <h6 class="card-title "> عدد المنتجات: {{item.orderItems.length}}</h6>
+                <h6 class="card-title text-success" *ngIf="item.isActive">تم الدفع</h6>
+                <h6 class="card-title text-warning" *ngIf="item.isActive">في انتظار الدفع</h6>
+
+                
+            </div>
+            <div class="col-lg-1 col-sm-3 sm-mt">
+                <button class="text-danger btn btn-outline-danger btngeneric d-inline-block  Pb-3  mb-2  float-start" (click)="ShowItems(item.id)">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div> 
+        </div>
+
+    </div>
+    </ng-container>
+
+</div>
+
+<app-order-item [openModalTrigger]="openModal" [ListProduct]="ListProduct"></app-order-item>

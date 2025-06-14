@@ -1,0 +1,318 @@
+<header class="rtl">
+  <!-- Top black notification bar -->
+  <!-- Mobile header -->
+  <div class="md:hidden w-full bg-white shadow-sm p-3">
+    <div class="flex items-center justify-between">
+      <!-- Hamburger menu button -->
+      <button class="text-gray-600" (click)="setNavbarOpen()">
+        <i class="fas fa-bars text-xl"></i>
+      </button>
+
+      <!-- Logo centered -->
+      <a [routerLink]="['/']" class="ms-auto me-3">
+        <img src="assets/img/lozan-logo.png" alt="Lozan Logo" class="h-10" />
+      </a>
+      <a routerLink="Card/ShopingCard" class="flex items-center gap-2">
+        <span class="flex gap-1">
+          <div class="relative">
+            <img
+              src="assets/images/svgexport-15 (2).svg"
+              class="h-7"
+              alt="bag shop icon "
+            />
+
+            <!-- <i class="fas fa-shopping-bag text-lg ms-1"></i> -->
+            <span
+              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-red-400 !text-[3px]"
+              >{{ numberOfCart }}</span
+            >
+          </div>
+          <span class="text-[15px]">السلة</span>
+          (<span class="font-bold">{{ TotalPriceInSalla }}</span>
+          <i-lucide
+            name="saudi-riyal"
+            class="text-black/95"
+            size="20"
+          ></i-lucide
+          >)
+        </span>
+      </a>
+    </div>
+
+    <!-- Mobile search bar (always visible) -->
+   <div class="w-full mt-3 ">
+  <div class="w-full mt-3">
+  <div class="relative">
+    <input
+      type="text"
+      placeholder="ادخل كلمة البحث"
+      class="border rounded-lg border-gray-300 py-2 pr-12 pl-4 w-full text-right focus:outline-none box-border"
+    />
+
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="absolute right-4 top-1/4 left-1 text-blueGray-400 transform -translate-y-1/2"
+      width="20"
+      height="20"
+      viewBox="0 0 30 30"
+      fill="currentColor"
+    >
+      <path
+        d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z"
+      ></path>
+    </svg>
+  </div>
+</div>
+</div>
+
+
+    <!-- Mobile navigation menu (toggle visibility) -->
+<div class="w-full mt-3" *ngIf="navbarOpen" #menu>
+  <nav class="flex flex-col bg-white rounded-lg shadow-md px-4 py-4 space-y-3 pb-3 border border-gray-200">
+
+    <div class="flex items-center gap-2 py-2 border-b border-gray-100" *ngIf="!Islogged">
+      <img width="20" src="/assets/images/user.png" alt="user" />
+      <span class="text-[15px] text-gray-700 font-medium cursor-pointer hover:text-red-500" (click)="OpenLogin()">
+        تسجيل الدخول
+      </span>
+    </div>
+
+    <div class="py-2 border-b border-gray-100" *ngIf="Islogged">
+      <div>
+      
+<!-- زر مرحباً بك -->
+<button
+  type="button"
+  class="flex items-center justify-between w-full text-right bg-gray-50 p-2 rounded hover:bg-gray-100"
+  (click)="isDropdownOpen = !isDropdownOpen"
+>
+  <div class="flex items-center gap-2">
+    <img src="/assets/images/uil_user.svg" width="20" alt="user" class="rounded-full" />
+    <span class="text-[15px] font-medium text-gray-700">
+      {{ userInfo?.fullName || "مرحباً بك" }}
+    </span>
+  </div>
+  <svg
+    [ngClass]="{ 'rotate-180': isDropdownOpen }"
+    class="w-4 h-4 text-gray-600 transition-transform duration-200"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+  </svg>
+</button>
+
+<ul
+  class="flex flex-col  space-y-2 text-sm bg-gray-50 p-3 rounded-t border-gray-200"
+  *ngIf="isDropdownOpen"
+>
+  <li>
+    <a class="text-end text-gray-700 hover:text-red-500 block" routerLink="orders/MyOrders">
+      <i class="fas fa-box ms-2"></i> طلباتي
+    </a>
+  </li>
+  <li>
+    <a class="text-end text-gray-700 hover:text-red-500 block" routerLink="orders/WaitingOrder">
+      <i class="fas fa-shopping-cart ms-2"></i> طلبات بانتظار الدفع
+    </a>
+  </li>
+  <li>
+    <a class="text-end text-gray-700 hover:text-red-500 block" routerLink="orders/Favorites">
+      <i class="far fa-star ms-2"></i> الأمنيات
+    </a>
+  </li>
+  <li>
+    <a class="text-end text-gray-700 hover:text-red-500 block" routerLink="orders/profile">
+      <i class="far fa-user-circle ms-2"></i> حسابي
+    </a>
+  </li>
+  <li><hr class="border-gray-200" /></li>
+  <li>
+    <a
+      class="text-danger text-end hover:text-red-700 block cursor-pointer"
+      (click)="Logout()"
+    >
+      <i class="fas fa-sign-out-alt ms-2"></i> تسجيل خروج
+    </a>
+  </li>
+</ul>
+       
+      </div>
+    </div>
+
+    <a
+      routerLink="/"
+      class="text-gray-600 font-semibold hover:text-red-500 py-2 border-b border-gray-100 text-end"
+    >
+      الصفحة الرئيسية
+    </a>
+
+    <a
+      routerLink="Card"
+      class="text-gray-600 font-semibold hover:text-red-500 py-2 border-b border-gray-100 text-end"
+    >
+      عالم حياتي للسيارات
+    </a>
+
+    <a
+      href="#"
+      class="text-gray-600 font-semibold hover:text-red-500 py-2 border-b border-gray-100 text-end"
+    >
+      نقاط البيع المعتمدة
+    </a>
+  </nav>
+</div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Desktop header (hidden on mobile) -->
+  <!-- Secondary light gray bar -->
+  <div class="hidden md:block w-full bg-[#f5f5f5] p-2 md:p-4 mt-4">
+    <div class="flex items-center justify-between container mx-auto">
+      <div class="flex items-center gap-3">
+        <!-- Login/User section -->
+        <div class="flex items-center gap-2" *ngIf="!Islogged">
+          <img src="/assets/images/user.png" alt="" />
+          <span class="text-[15px]" (click)="OpenLogin()" role="button"
+            >تسجيل الدخول</span
+          >
+        </div>
+
+        <!-- User dropdown when logged in -->
+        <div class="flex items-center gap-2" *ngIf="Islogged">
+          <div class="dropdown">
+            <button
+              type="button"
+              class="flex items-center gap-2"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="fas fa-user text-black"></i>
+              <span class="text-[15px]">{{
+                userInfo?.fullName || "مرحباً بك"
+              }}</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" dir="rtl">
+              <li>
+                <a class="dropdown-item" routerLink="orders/MyOrders"
+                  ><i class="fas fa-box mt-1 mx-2"></i> طلبات</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="orders/WaitingOrder"
+                  ><i class="fas fa-shopping-cart mt-1 mx-2"></i> طلبات بانتظار
+                  الدفع</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="orders/Favorites"
+                  ><i class="far fa-star mt-1 mx-2"></i>الامنيات
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="orders/profile"
+                  ><i class="far fa-user-circle mt-1 mx-2"></i> حسابي</a
+                >
+              </li>
+              <li><hr class="dropdown-divider" /></li>
+              <li>
+                <a
+                  class="dropdown-item text-danger"
+                  (click)="Logout()"
+                  role="button"
+                  ><i class="fas fa-sign-out-alt mt-1 mx-2"></i> تسجيل خروج</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Shopping cart -->
+        <div class="flex items-center gap-2 ml-4">
+          <a routerLink="Card/ShopingCard" class="flex items-center gap-2">
+            <div class="relative">
+              <i class="fas fa-shopping-bag text-xl ms-2"></i>
+              <span
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                >{{ numberOfCart }}</span
+              >
+            </div>
+            <span class="flex gap-1">
+              <span class="text-[15px]">السلة</span>
+              (<span>{{ TotalPriceInSalla }}</span>
+              <i-lucide name="saudi-riyal" class="text-black"></i-lucide>)
+            </span>
+          </a>
+        </div>
+      </div>
+      <div>
+        <ul class="flex items-center justify-evenly gap-5">
+          <li class="text-[15px]"><a routerLink="AboutUs">من نحن !</a></li>
+          <li class="text-[15px]">
+            <a routerLink="InstallationInstructions">تعليمات التركيب</a>
+          </li>
+          <li class="text-[15px]">
+            <a routerLink="GuaranteesAndPolicy"
+              >الضمانات وسياسة الاسترجاع والاستبدال</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main navigation bar (desktop) -->
+  <div class="hidden md:block w-full bg-white shadow-sm p-2 md:p-5">
+    <div class="flex items-center justify-between container mx-auto">
+      <div class="flex items-center gap-8">
+        <a [routerLink]="['/']" class="ml-4">
+          <img src="assets/img/lozan-logo.png" alt="Lozan Logo" class="h-12" />
+        </a>
+        <a routerLink="/" class="text-gray-600 font-semibold hover:text-red-500"
+          >الصفحة الرئيسية</a
+        >
+        <a
+          routerLink="Card"
+          class="text-gray-600 font-semibold hover:text-red-500"
+          >عالم حياتي للسيارات</a
+        >
+        <a href="#" class="text-gray-600 font-semibold hover:text-red-500"
+          >نقاط البيع المعتمدة</a
+        >
+      </div>
+
+      <div class="relative">
+        <input
+          type="text"
+          placeholder="ادخل كلمة البحث"
+          class="border rounded-lg border-gray-300 py-2 px-4 w-64 text-right focus:outline-none"
+        />
+        <i
+          class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+        ></i>
+      </div>
+    </div>
+  </div>
+</header>
+
+<app-login [openModalTrigger]="openLoginModal"></app-login>

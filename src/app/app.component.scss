@@ -1,0 +1,60 @@
+
+
+apple-pay-button {
+  --apple-pay-button-width: 150px;
+  --apple-pay-button-height: 43px;
+  --apple-pay-button-border-radius: 26px;
+  --apple-pay-button-padding: 20px 10px;
+  --apple-pay-button-box-sizing: border-box;
+  display: block !important;
+}
+
+// .whats-app {
+//   position: fixed;
+//   width: 60px;
+//   height: 60px;
+//   bottom: 40px;
+//   right: 15px;
+//   background-color: #25d366;
+//   color: #FFF;
+//   border-radius: 50px;
+//   text-align: center;
+//   font-size: 30px;
+//   box-shadow: 2px 2px 3px #999;
+//   z-index: 100;
+// }
+
+// .my-float {
+//   margin-top: 16px;
+// }
+.whats-app {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 40px;
+  right: 40px;
+  background-color: #25d366;
+  color: #fff;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 30px;
+  box-shadow: 0 0 0 rgba(37, 211, 102, 0.4);
+  animation: pulse-green 2s infinite;
+  z-index: 1000;
+}
+
+@keyframes pulse-green {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+  }
+}
+
+.my-float {
+  margin-top: 16px;
+}

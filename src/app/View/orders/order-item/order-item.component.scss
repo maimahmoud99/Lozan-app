@@ -1,0 +1,34 @@
+.btngeneric:hover{
+    background-color: #DC2626;
+    color: #fff  !important;
+    }
+
+    @media (max-width: 768px) {
+        /* تنسيقات للجوال */
+       .container{
+        width: 100%;
+       }
+       .prodItem {
+        padding: 10px 20px;
+       }
+     .prodItem .col-sm-3{
+        width: 25%;
+     }
+    .prodItem .col-sm-8{
+        width: 75%;
+     }
+     .prodItem img{
+        height: 50px ;
+     }
+     
+     .prodItem .sm-w-full{
+        width: 100%;
+        text-align: center;
+        margin: auto;
+     }
+     .prodItem .sm-mt{
+        margin:15px 0px;
+        text-align: center;
+
+     }
+      }

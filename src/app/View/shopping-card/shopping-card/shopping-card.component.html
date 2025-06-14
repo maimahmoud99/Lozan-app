@@ -1,0 +1,224 @@
+<div class="container-fluid mt-1 shoppingCard">
+    <div class="container-fluid mt-1 shoppingCard">
+
+  <!-- Empty Cart Message -->
+  <div *ngIf="ListProduct.length === 0; else showCart" class="empty-cart-message text-center py-12">
+    <div class="max-w-md mx-auto">
+      <img src="assets/images/emptyCaed.png" alt="Empty Cart" class="w-15 h-15 mx-auto mb-6" />
+      <h3 class="text-lg font-normal text-gray-400 mb-3">السلة  فارغة</h3>
+      <!-- <p class="text-gray-600 mb-6">لم تقم بإضافة أي منتجات إلى سلة التسوق بعد</p> -->
+      <button routerLink="/" 
+      class="bg-red-600
+       hover:bg-red-700
+        text-white font-bold
+         py-2 px-8 rounded-lg
+          transition-colors
+           cursor-pointer">
+        عودة للرئيسية
+      </button>
+    </div>
+  </div>
+   <ng-template #showCart>
+<div class="row pt-16 pb-16 xl:mt-8 xl:block my-5">
+   
+    <div class="col-lg-8 col-md-7 col-sm-12">
+          <!-- Cart Items -->
+           <ng-container *ngFor="let item of ListProduct; let i=index">
+          <div class="card mb-4 ">
+            <div class="card-body">
+                <div class="row cart-item mb-3 mt-3 ">
+                    <div class="col-12">
+                        <i class="fas fa-times-circle text-danger float-start fw-bold  mx-2 pb-2" role="button" style="font-size: 26px;"  (click)="RemoveItem(i)"></i>
+                    </div>
+                    <div class=" col-lg-6  col-sm-12 items-center">
+                        <div class="row items-centers">
+                        <div class="col-lg-3 col-md-3 col-sm-4">
+                            <img [src]="item.imageUrl" alt="Product 1" class="img-fluid rounded">
+                        </div>
+                        <div class="col-lg-9 col-md-9 col-sm-8">
+                            <h6 class="card-title">{{item.name}}</h6>
+                            <p class="text-center flex">{{item.price}} <i-lucide name="saudi-riyal" class=" text-black"></i-lucide></p>
+    
+                        </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-3 col-sm-6 mt-3">
+                        <div class="input-group">
+                            <button class="btn btn-outline-secondary btn-sm btnminus px-3 btngeneric" (click)="UpdateCounter(item,-1)" type="button">-</button>
+                            <input style="max-width:100px" type="text" class="form-control  form-control-sm text-center quantity-input" value="{{item.quantity}}">
+                            <button class="btn btn-outline-secondary btn-sm btnplus px-3 btngeneric" (click)="UpdateCounter(item,1)" type="button">+</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-3  col-sm-6  mt-4 items-center">
+                        <div class="row">
+                        <p class="col-lg-9 fw-bold flex"> <span class=" fw-bold text-red-600 fst-italic">المجموع: </span>{{item.price * item.quantity}} 
+                         <i-lucide name="saudi-riyal" class=" text-black"></i-lucide>
+                        </p>
+                    </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-5 mb-2">
+                    <div class="col-lg-4 col-sm-12 col-md-12 ">
+                        <h4 class="fw-bold " [ngClass]="item.selections['frontGlass'] ? 'text-black' : 'text-danger'">الزجاج الامامي <span class="text-danger text-2xl">*</span></h4>
+                    </div>
+                    <div class="col-lg-8 col-sm-12 col-md-12 ">
+                        <select #val1 (change)="updateSelection(item, 'frontGlass', val1.value)" dir="rtl" class="form-select ps-5" aria-label="Default select example" [ngStyle]="{'color': !item.selections['frontGlass'] ? 'black' : 'black'}">
+                            <option value="" selected>اختر</option>
+                            <ng-container *ngFor="let subitem of directionInfosList; ">
+                                <option [selected]="item.selections['frontGlass']== (subitem.id+'')" [value]="subitem.id" *ngIf="subitem.directionId == 1" >{{subitem.name}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+                <div class="row  mb-2">
+                    <div class="col-lg-4 col-sm-12 col-md-12">
+                       <h4 class="fw-bold"  [ngClass]="!item.selections['frontSides'] ?'text-danger' :'text-black'">الجوانب الامامية <span class="text-danger text-2xl">*</span></h4>
+                       
+                    </div>
+                    <div class="col-lg-8 col-sm-12 col-md-12 ">
+                        <select  #val2 (change)="updateSelection(item, 'frontSides', val2.value)" dir="rtl" class="form-select ps-5" aria-label="Default select example">
+                            <option value="" selected>اختر</option>
+                            <ng-container *ngFor="let subitem of directionInfosList">
+                                <option [selected]="item.selections['frontSides']== (subitem.id+'')"  [value]="subitem.id" *ngIf="subitem.directionId == 2" >{{subitem.name}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="row mb-2">
+                    <div class="col-lg-4 col-sm-12 col-md-12">
+                       <h4 class="fw-bold"  [ngClass]="!item.selections['backSides'] ?'text-danger' :'text-black'">الجوانب الخلفية <span class="text-danger text-2xl">*</span></h4>
+                       
+                    </div>
+                    <div class="col-lg-8 col-sm-12 col-md-12 ">
+                        <select #val3 (change)="updateSelection(item, 'backSides', val3.value)" dir="rtl" class="form-select ps-5" aria-label="Default select example">
+                            <option value="" selected>اختر</option>
+                            <ng-container *ngFor="let subitem of directionInfosList">
+                                <option [selected]="item.selections['backSides']== (subitem.id+'')"  [value]="subitem.id" *ngIf="subitem.directionId == 3" >{{subitem.name}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="row  mb-2">
+                    <div class="col-lg-4 col-sm-12 col-md-12 mt-1">
+                       <h4 class="fw-bold" [ngClass]="!item.selections['rearGlass'] ?'text-danger' :'text-black'">الزجاج الخلفي <span class="text-danger text-2xl">*</span></h4>
+                       
+                    </div>
+                    <div class="col-lg-8 col-sm-12 col-md-12 mt-1">
+                        <select #val4 (change)="updateSelection(item, 'rearGlass', val4.value)" dir="rtl" class="form-select ps-5" aria-label="Default select example">
+                            <option value="" selected>اختر</option>
+                            <ng-container *ngFor="let subitem of directionInfosList">
+                                <option [selected]="item.selections['rearGlass']== (subitem.id+'')"  [value]="subitem.id" *ngIf="subitem.directionId == 4" >{{subitem.name}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    </div>
+    <!--summmery---------------------------------------->
+   <div class="col-lg-4 col-md-5 col-sm-12">
+        <div class="card cart-summary mx-2">
+            <div class="card-body">
+                <h6 class="card-title mb-4">ملخص الطلب</h6>
+                <div class="d-flex justify-content-between mb-5">
+                    <span>مجموع المنتجات</span>
+
+                    <span class="flex">{{TotalPrice}}
+                        <i-lucide name="saudi-riyal" class=" text-black"></i-lucide>
+                    </span>
+                </div>
+                
+                <hr>
+                <div class="justify-content-between mb-4 my-4">
+
+                <h5 class="card-title mb-3 text-gray-100" >هل لديك كود خصم</h5>
+                <div class="input-group mb-3">
+                    <input type="text" 
+                    class="form-control btnminus "
+                     placeholder="ادخل كود خصم"
+                      [(ngModel)]="Code"  >
+                    <button (click)="AddPromoCode()" *ngIf="!IsAddPromoCode" [disabled]="IsAddPromoCode"  class="bg-red-600 px-4 py-2.5 
+                     font-medium  text-white 
+                     hover:bg-red-600 
+                     focus:outline-none 
+                     focus:ring-4 focus:ring-primary-300 
+                     dark:bg-red-600 dark:hover:bg-primary-700 
+                     dark:focus:ring-primary-800 btnplus" type="button">إضافة</button>
+                </div>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between mb-4 mt-4">
+                    <strong>الاجمالي</strong>
+                    <span class="flex">{{TotalPrice}}
+                         <i-lucide name="saudi-riyal" class=" text-black"></i-lucide>
+                    </span>
+                </div>
+                
+                <button (click)="CheckOut()" class="w-100 justify-center rounded-lg bg-red-600 px-5 py-2.5  font-medium  text-white hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-red-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                    اتمام الطلب
+                  </button>
+
+                  
+                  
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- تم حذف المنتج -->
+<div 
+  *ngIf="showError" 
+  [ngClass]="shakeClass"
+  id="deleteDiv"
+  class="fixed rounded-md top-2 left-2 right-2 z-50 bg-green-500 border-l-lg text-white py-3 px-4 text-right text-sm sm:text-base shadow-md flex items-center gap-3 justify-between"
+  style="max-width: 100vw; word-wrap: break-word;"
+>
+  <div class="flex items-center gap-3 flex-1">
+    <div class="flex items-center justify-center w-6 h-6 rounded-full border border-white text-white text-xs font-bold">
+      ✓
+    </div>
+    <p class="flex-1">{{ errorMessage }}</p>
+  </div>
+  <button 
+    (click)="showError = false"
+    class="text-white text-md font-bold hover:text-gray-200 transition duration-200"
+    aria-label="Close"
+  >
+    x
+  </button>
+</div>
+
+<!-- هناك حقول يجب ادخالها -->
+ <div 
+  *ngIf="showCustomError" 
+  [ngClass]="errorShakeClass"
+  id="showCustomError"
+  class="fixed rounded-md top-2 left-2 right-2 z-50  text-white py-3 px-4 text-right text-sm sm:text-base shadow-md flex items-center gap-3 justify-between"
+  style="max-width: 100vw; word-wrap: break-word;"
+>
+  <div class="flex items-center gap-3 flex-1">
+    <div class="flex items-center justify-center w-6 h-6 rounded-full border border-white text-white text-xs font-bold">
+      ✓
+    </div>
+    <p class="flex-1">{{ customErrorMessage }}</p>
+  </div>
+  <button 
+    (click)="showCustomError = false"
+    class="text-white text-md font-bold hover:text-gray-200 transition duration-200"
+    aria-label="Close"
+  >
+    x
+  </button>
+</div>
+</ng-template>
+</div>
+<ng-toast [style]="{width:'300px'}"></ng-toast>
+
+<app-login  [openModalTrigger]="openLoginModal"></app-login>

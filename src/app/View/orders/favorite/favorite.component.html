@@ -1,0 +1,36 @@
+<div class="row fav">
+    <h2 class="my-3 fw-bold">الامنيات</h2>
+    <ng-container *ngFor="let item of ListProduct; let i=index">
+
+    <div class="card mt-2 ">
+        <div class="card-body row p-0 mt-3">
+            <div class="col-lg-1 col-sm-3">
+                <img [src]="item.imageUrls[0]" alt="Product 1" class="img-fluid rounded" width="100%" height="50px" >
+
+            </div>
+            <div class="col-lg-6 col-sm-8">
+                <h6 class="card-title ">{{item.name}}</h6>
+                <p class="text-center">{{item.price}} <span class="fst-italic text-decoration-line-through">ريال</span></p>
+                
+
+            </div>
+            <div class="col-lg-3 col-sm-8 sm-mt">
+                <button    (click)="addToCart(item)" type="button" class=" inline-flex sm-w-full items-center justify-center rounded-lg bg-red-600 px-5 py-2.5 text-sm font-medium  text-white hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-red-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                    <svg class="-ms-2 me-2 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7h-1M8 7h-.688M13 5v4m-2-2h4" />
+                    </svg>
+                    اضافة للسلة
+                  </button>
+                
+            </div>
+            <div class="col-lg-1 col-sm-3 sm-mt">
+                <button class="text-danger btn btn-outline-danger btngeneric d-inline-block  Pb-3  mb-2  float-start" (click)="RemoveFavorite(item.id)">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div> 
+        </div>
+
+    </div>
+    </ng-container>
+
+</div>

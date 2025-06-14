@@ -1,0 +1,554 @@
+<script src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"></script>
+
+<div class="container mx-auto">
+
+
+
+  <form [formGroup]="orderForm" class="checkout-form">
+    <!-- Order Summary Section -->
+    <div class="card rounded-lg mb-2 mt-6">
+      <!-- <div class="card-header bg-white p-4 border-b"> -->
+      <h2 class="text-xl font-bold m-6">ملخص الطلب</h2>
+      <!-- </diظv> -->
+
+      <div class="card-body p-6">
+        <div class="order-summary">
+          <!-- Order Items Summary -->
+          <div class="order-items mb-6">
+            <h3 class="text-lg font-semibold mb-4">المنتجات</h3>
+            <div class="order-item-list max-h-60 overflow-y-auto pr-1">
+              <!-- Order items would be listed here -->
+              <div
+                class="order-item flex items-center pb-3 border-b"
+                *ngFor="let item of ListProduct"
+              >
+                <img
+                  [src]="item.imageUrl"
+                  alt="Product"
+                  class="h-25 w-25 object-cover rounded"
+                />
+                <div class="flex-grow">
+                  <h4 class="font-medium">{{ item.name }}</h4>
+                  <p class="text-sm text-gray-600">
+                    الكمية: {{ item.quantity }}
+                  </p>
+                </div>
+                <div class="text-black font-bold text-sm d-flex">
+                  {{ item.price * item.quantity }}
+                  <span class="text-decoration-line-through"
+                    ><lucide-angular
+                      name="saudi-riyal"
+                      class="my-icon w-5 h-5"
+                    ></lucide-angular>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Price Summary -->
+          <div class="price-summary">
+            <div class="summary-row flex justify-between py-3 border-b">
+              <span class="font-medium">ملخص السلة</span>
+              <span class="font-bold text-black d-flex text-sm"
+                >{{ TotalPrice }}
+                <lucide-angular
+                  name="saudi-riyal"
+                  class="my-icon w-5 h-5"
+                ></lucide-angular
+              ></span>
+            </div>
+
+            <div class="summary-row flex justify-between py-3 border-b">
+              <span class="font-medium">تكلفة الشحن</span>
+              <span class="font-bold text-black text-sm d-flex"
+                >{{ CostShipping }}
+                <lucide-angular
+                  name="saudi-riyal"
+                  class="my-icon w-5 h-5"
+                ></lucide-angular
+              ></span>
+            </div>
+
+            <div class="summary-row flex justify-between py-3 font-bold">
+              <span>
+                اجمالي الطلب
+                <small class="text-blueGray-400"> بعد تطبيق الخصم</small>
+              </span>
+              <span class="text-black text-sm d-flex"
+                >{{ TotalPrice + CostShipping }}
+                <lucide-angular
+                  name="saudi-riyal"
+                  class="my-icon w-5 h-5"
+                ></lucide-angular
+              ></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Address Section -->
+    <div class="card rounded-lg mb-3 mt-2">
+      <!-- <div clasظs="card-header bg-white p-4 border-b flex flex-col items-center"> -->
+      <!-- <div class="logo-container mx-auto"> -->
+      <!-- <img src="assets/img/lozan-logo.png" alt="Lozan Logo" class="h-16 w-auto"> -->
+      <!-- </div> -->
+      <!-- <h3 class="font-bold text-center"> مرحبا بك , {{userInfo?.fullName}}</h3> -->
+      <!-- </div> -->
+
+      <div class="card-body p-6">
+        <div class="address-section">
+          <div class="section-header flex justify-between items-center mb-4">
+            <!-- <h3 class="text-lg font-semibold">إضافة عنوان</h3> -->
+            <button type="button" class="text-red-600 hover:text-red-800">
+              <!-- <i class="fas fa-plus-circle mr-1"></i> عنوان جديد -->
+            </button>
+          </div>
+
+          <div class="address-form p-1 rounded-lg">
+            <ng-container [formGroup]="addresses">
+              <!-- NAME -->
+              <!-- <h2 class="text-xl font-bold pb-2"> الشحن</h2> -->
+              <!-- <h2 class="text-xl font-bold mb-3">بيانات شخصية  </h2> -->
+
+              <div class="form-group">
+                <label
+                  for="street"
+                  class="block mb-2 text-sm font-medium text-gray-500"
+                  >الاسم <span class="text-red-600">*</span></label
+                >
+
+                <input
+                  formControlName="neighborhood"
+                  type="text"
+                  id="neighborhood"
+                  class="form-input w-full p-3 pl-10 rounded-lg border border-gray-100 text-[#9F9F9F] placeholder-[#9F9F9F] focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                  placeholder="الاسم  "
+                />
+
+                <!-- <textarea id="street" formControlName="customerName" rows="2" class="form-textarea w-full p-3 rounded-lg border border-gray-300 focus:ring-2" placeholder="الاسم بالكامل"></textarea> -->
+                <div
+                  class="text-red-600 text-sm mt-1"
+                  *ngIf="
+                    addresses.get('customerName')?.invalid &&
+                    (addresses.get('customerName')?.dirty ||
+                      addresses.get('customerName')?.touched)
+                  "
+                >
+                  <small
+                    *ngIf="addresses.get('customerName')?.errors?.['required']"
+                  >
+                    الاسم مطلوب*</small
+                  >
+                </div>
+              </div>
+              <!-- Phone Number -->
+              <div class="form-group">
+                <label
+                  for="phone"
+                  class="block mb-2 text-sm font-medium text-gray-500 mt-3"
+                  >رقم الجوال <span class="text-red-600">*</span></label
+                >
+                <div class="relative">
+                  <input
+                    formControlName="userPhoneNumber"
+                    type="text"
+                    id="phone"
+                    class="form-input w-full p-3 pl-10 rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                    placeholder="05xxxxxxxx"
+                  />
+                  <div
+                    class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+                  >
+                    <i class="fas fa-phone-alt text-gray-400"></i>
+                  </div>
+                </div>
+                <div
+                  class="text-red-600 text-sm mt-1"
+                  *ngIf="
+                    addresses.get('userPhoneNumber')?.invalid &&
+                    (addresses.get('userPhoneNumber')?.dirty ||
+                      addresses.get('userPhoneNumber')?.touched)
+                  "
+                >
+                  <small
+                    *ngIf="addresses.get('userPhoneNumber')?.errors?.['required']"
+                    >رقم الجوال مطلوب*</small
+                  >
+                  <span
+                    *ngIf="addresses.get('userPhoneNumber')?.errors?.['pattern']"
+                    >يجب كتابة رقم الجوال بصيغة صحيحة</span
+                  >
+                </div>
+              </div>
+
+              <!-- City Selection -->
+              <div class="form-group">
+                <label
+                  for="neighborhood"
+                  class="block mb-2 text-sm font-medium text-gray-500 mt-3"
+                  >المدينه <span class="text-red-600">*</span></label
+                >
+                <div class="relative">
+                  <input
+                    formControlName="neighborhood"
+                    type="text"
+                    id="neighborhood"
+                    class="form-input w-full p-3 pl-10 rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                    placeholder="اسم المدينه"
+                  />
+                  <div
+                    class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+                  >
+                    <i class="fas fa-home text-gray-400"></i>
+                  </div>
+                </div>
+                <div
+                  class="text-red-600 text-sm mt-1"
+                  *ngIf="
+                    addresses.get('neighborhood')?.invalid &&
+                    (addresses.get('neighborhood')?.dirty ||
+                      addresses.get('neighborhood')?.touched)
+                  "
+                >
+                  <small
+                    *ngIf="addresses.get('neighborhood')?.errors?.['required']"
+                  >
+                    المدينة*</small
+                  >
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shipping Section -->
+    <div class="card rounded-lg mb-3">
+      <!-- <div class="card-header bg-white p-4 m-2 "> -->
+      <h2 class="text-xl font-bold mr-5 mt-3">الشحن</h2>
+      <!-- </div> -->
+
+      <div class="card-body p-6">
+        <div class="shipping-info flex items-center justify-between">
+          <div
+            class="free-shipping-banner w-full border border-green-200 rounded-lg p-4 flex items-center"
+          >
+            <!-- <i class="fas fa-truck text-gray-500 text-2xl mx-4"></i> -->
+            <!-- <i class="bg-primary text-white rounded-icon sicon-shipping-fast flip-x"></i><i class="bg-primary text-white rounded-icon sicon-shipping-fast flip-x"></i> -->
+            <!-- <i class="bg-primary text-white rounded-icon sicon-shipping-fast flip-x"></i> -->
+            <img
+              src="assets/images/roundedRedCar.svg"
+              class="w-16 h-16 object-contain"
+            />
+
+            <div class="m-3">
+              <p class="font-bold text-lg">شحن مجاني</p>
+              <p class="text-gray-600 text-sm">مبروك عليك الشحن المجاني !🎉</p>
+              <!-- <p class=" text-green-600">سيتم توصيل طلبك عن طريق <span class="font">شركه أي مكان</span> خلال 3-5 أيام عمل</p> -->
+            </div>
+          </div>
+          <div class="mt-2"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment Methods Section -->
+   
+    <!-- Submit Button -->
+   
+ <!-- <div class="mb-4">
+        <apple-pay-button buttonstyle="black" type="plain" locale="en" (click)="onApplePayButtonClicked()"></apple-pay-button> 
+
+  </div> -->
+
+    <!-- <p>{{orderForm.value | json }}</p> -->
+
+    <div
+      class="bg-white rounded-lg p-6 rounded-lg border border-1 max-w-2xl mx-auto mb-5"
+    >
+     
+
+      <!-- الدفع -->
+      <div>
+        <div class="flex justify-between items-start">
+          <div class="flex items-start gap-2">
+            <span class="text-xl mt-1 pt-1"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="22"
+                height="22"
+                color="currentColor"
+                fill="none"
+                class=""
+              >
+                <path
+                  d="M14.4998 12.001C14.4998 13.3817 13.3805 14.501 11.9998 14.501C10.6191 14.501 9.49982 13.3817 9.49982 12.001C9.49982 10.6203 10.6191 9.50098 11.9998 9.50098C13.3805 9.50098 14.4998 10.6203 14.4998 12.001Z"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+                <path
+                  d="M16 5.00098C18.4794 5.00098 20.1903 5.38518 21.1329 5.6773C21.6756 5.84549 22 6.35987 22 6.92803V16.6833C22 17.7984 20.7719 18.6374 19.6762 18.4305C18.7361 18.253 17.5107 18.1104 16 18.1104C11.2491 18.1104 10.1096 19.9161 3.1448 18.3802C2.47265 18.232 2 17.6275 2 16.9392V6.92214C2 5.94628 2.92079 5.23464 3.87798 5.42458C10.1967 6.67844 11.4209 5.00098 16 5.00098Z"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+                <path
+                  d="M2 9.00098C3.95133 9.00098 5.70483 7.40605 5.92901 5.75514M18.5005 5.50098C18.5005 7.54062 20.2655 9.46997 22 9.46997M22 15.001C20.1009 15.001 18.2601 16.3112 18.102 18.0993M6.00049 18.4971C6.00049 16.2879 4.20963 14.4971 2.00049 14.4971"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+                </svg>
+          </span>
+            <div class="text-right">
+              <p class="font-bold">الدفع</p>
+              <p class="text-gray-600 text-sm">مدى</p>
+            </div>
+          </div>
+          <!-- <button class="text-gray-500 hover:text-black">
+        
+      </button> -->
+        </div>
+
+        <div class="flex flex-col gap-2 mb-5 mt-2">
+          <!-- صف أول: مدى + فيزا + تابي (دائمًا جنب بعض) -->
+  <div class="grid grid-cols-2 gap-2">
+    <!-- ApplePay -->
+    <!-- <label
+      *ngIf="orderForm.get('paymentTypeId')?.value !== PaymentType.MasterCard"
+      class="flex rounded items-center justify-center px-1 py-3 cursor-pointer gap-2"
+      [ngClass]="{
+        'border-red-500 border-2': orderForm.get('paymentTypeId')?.value === PaymentType.ApplePay,
+        'border border-gray-300': orderForm.get('paymentTypeId')?.value !== PaymentType.ApplePay
+      }"
+    >
+      <input
+        type="radio"
+        formControlName="paymentTypeId"
+        [value]="PaymentType.ApplePay"
+        class="accent-red-500 w-5 h-5 focus:ring-2 focus:ring-red-500 focus:ring-offset-1"
+      />
+      <img src="assets/img/applePay.svg" class="w-16 h-16 object-contain" />
+    </label> -->
+  
+     <!-- الدفع عند الاستلام -->
+      <label
+        class="flex items-center rounded-lg px-4 py-4 cursor-pointer gap-2 w-full"
+        [ngClass]="{
+          'border-red-500 border-2': orderForm.get('paymentTypeId')?.value === PaymentType.Prepaid,
+          'border border-gray-300': orderForm.get('paymentTypeId')?.value !== PaymentType.Prepaid
+        }"
+      >
+        <input
+          type="radio"
+          formControlName="paymentTypeId"
+          [value]="PaymentType.Prepaid"
+          class="accent-red-500 w-5 h-5"
+        />
+        <img
+          src="assets/images/fluent_money-hand-20-regular.svg"
+          class="w-7 h-7 object-contain" />
+        <p class="text-gray-600 text-sm">الدفع عند الاستلام</p>
+      </label>
+
+    <!-- طرق دفع أخرى -->
+    <!-- <label
+      *ngIf="orderForm.get('paymentTypeId')?.value !== PaymentType.MasterCard"
+      class="flex items-center border border-gray-300 rounded-lg px-4 py-2 cursor-pointer gap-2 w-full"
+    >
+      <input
+        type="radio"
+        formControlName="paymentTypeId"
+        [value]="PaymentType.MasterCard"
+        class="accent-red-500 w-5 h-5"
+      />
+      <span class="text">طرق دفع أخرى</span>
+    </label> -->
+  </div>
+
+  <!-- Expanded payment methods -->
+  <div *ngIf="orderForm.get('paymentTypeId')?.value === PaymentType.MasterCard" class="expanded-methods">
+    <!-- Grid: مدى + فيزا + تابي + ApplePay -->
+    <div class="grid grid-cols-2 gap-2">
+         <!-- ApplePay again -->
+      <label
+        class="flex rounded items-center justify-center px-1 py-3 cursor-pointer gap-2"
+        [ngClass]="{
+          'border-red-500 border-2': orderForm.get('paymentTypeId')?.value === PaymentType.ApplePay,
+          'border border-gray-300': orderForm.get('paymentTypeId')?.value !== PaymentType.ApplePay
+        }"
+      >
+        <input
+          type="radio"
+          formControlName="paymentTypeId"
+          [value]="PaymentType.ApplePay"
+          class="accent-red-500 w-5 h-5 focus:ring-2 focus:ring-red-500 focus:ring-offset-1"
+        />
+        <img src="assets/img/applePay.svg" class="w-16 h-16 object-contain" />
+      </label>
+      <!-- مدى -->
+      <label
+        class="flex rounded items-center justify-center px-1 py-3 cursor-pointer gap-2"
+        [ngClass]="{
+          'border-red-500 border-2': orderForm.get('paymentTypeId')?.value === PaymentType.Madai,
+          'border border-gray-300': orderForm.get('paymentTypeId')?.value !== PaymentType.Madai
+        }"
+      >
+        <input
+          type="radio"
+          formControlName="paymentTypeId"
+          [value]="PaymentType.Madai"
+          class="accent-red-500 w-5 h-5"
+        />
+        <img src="assets/img/Madia.svg" class="w-16 h-16 object-contain" />
+      </label>
+
+      <!-- فيزا -->
+      <label
+        class="flex rounded items-center justify-center px-1 py-3 cursor-pointer gap-2"
+        [ngClass]="{
+          'border-red-500 border-2': orderForm.get('paymentTypeId')?.value === PaymentType.Visa,
+          'border border-gray-300': orderForm.get('paymentTypeId')?.value !== PaymentType.Visa
+        }"
+      >
+        <input
+          type="radio"
+          formControlName="paymentTypeId"
+          [value]="PaymentType.Visa"
+          class="accent-red-500 w-5 h-5"
+        />
+        <img
+          src="https://cdn.assets.salla.network/prod/stores/vendor/checkout/images/icons/pay-option-credit-2.svg"
+          class="w-16 h-16 object-contain"
+        />
+      </label>
+
+      <!-- تابي -->
+      <label
+        class="flex items-center rounded justify-center px-1 py-3 cursor-pointer gap-2"
+        [ngClass]="{
+          'border-red-500 border-2': orderForm.get('paymentTypeId')?.value === PaymentType.TABBY,
+          'border border-gray-300': orderForm.get('paymentTypeId')?.value !== PaymentType.TABBY
+        }"
+      >
+        <input
+          type="radio"
+          formControlName="paymentTypeId"
+          [value]="PaymentType.TABBY"
+          class="accent-red-500 w-5 h-5"
+        />
+        <img
+          src="https://cdn.assets.salla.network/prod/stores/vendor/checkout/images/icons/pay-option-tabby_en.png?v=0.0.1"
+          class="w-16 h-16 object-contain"
+        />
+      </label>
+
+    
+    </div>
+
+    <!-- تمارا + الدفع عند الاستلام -->
+    <div class="flex flex-col gap-2 mt-4">
+      <!-- تمارا -->
+      <label
+        class="flex items-center rounded-lg px-4 py-2 cursor-pointer gap-2 w-full"
+        [ngClass]="{
+          'border-red-500 border-2': orderForm.get('paymentTypeId')?.value === PaymentType.Tamara,
+          'border border-gray-300': orderForm.get('paymentTypeId')?.value !== PaymentType.Tamara
+        }"
+      >
+        <input
+          type="radio"
+          formControlName="paymentTypeId"
+          [value]="PaymentType.Tamara"
+          class="accent-red-500 w-5 h-5"
+        />
+        <img
+          src="https://cdn.assets.salla.network/prod/stores/vendor/checkout/images/icons/tamara/ar-tamara-label.svg"
+          class="w-28 h-16 object-contain"
+        />
+      </label>
+  
+    </div>
+  </div>
+
+  <!-- بطاقة البيانات (card info) -->
+  <!-- <div dir="rtl" class="grid grid-cols-2 gap-4 max-w-md mt-6">
+    <div class="col-span-2">
+      <label class="font-normal mb-2">رقم البطاقة</label>
+      <div class="relative">
+        <input
+          type="text"
+          placeholder="رقم البطاقة"
+          class="border rounded-lg border-gray-300 py-2 pr-12 pl-4 w-full text-right focus:outline-none"
+        />
+        <i class="fas fa-credit-card absolute right-4 top-1/2 transform -translate-y-1/2 text-blueGray-400"></i>
+      </div>
+    </div>
+
+    <div>
+      <label class="font-normal mb-2">تاريخ الانتهاء</label>
+      <input
+        type="text"
+        placeholder="شهر / سنة"
+        class="w-full border border-gray-300 rounded px-3 py-3 text-center"
+      />
+    </div>
+
+    <div>
+      <label class="font-normal mb-2">رمز التحقق (CVC)</label>
+      <input
+        type="text"
+        placeholder="رمز التحقق"
+        class="w-full border border-gray-300 rounded px-3 py-3 text-center"
+      />
+    </div>
+  </div> -->
+        </div>
+      </div>
+      <!-- Submit Button -->
+      <div class="checkout-actions w-full flex justify-center mt-10">
+        <button
+          type="submit"
+          (click)="SavePay()"
+          class="checkout-btn w-full max-w-md bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg transition-colors flex items-center justify-center"
+        >
+          <!-- <i class="fas fa-arrow-right ml-2"></i> -->
+          <span>إتمام الطلب</span>
+        </button>
+      </div>
+    </div>
+  </form>
+  <!-- هناك حقول يجب ادخالها -->
+ <div 
+  *ngIf="showCustomError" 
+  [ngClass]="errorShakeClass"
+  id="showCustomError"
+  class="fixed rounded-md top-2 left-2 right-2 z-50 bg-[#22C55E] text-white py-3 px-4 text-right text-sm sm:text-base shadow-md flex items-center gap-3 justify-between"
+  style="max-width: 100vw; word-wrap: break-word;"
+>
+  <div class="flex items-center gap-3 flex-1">
+    <div class="flex items-center justify-center w-6 h-6 rounded-full border border-white text-white text-xs font-bold">
+      ✓
+    </div>
+    <p class="flex-1">{{ customErrorMessage }}</p>
+  </div>
+  <button 
+    (click)="showCustomError = false"
+    class="text-white text-md font-bold hover:text-gray-200 transition duration-200"
+    aria-label="Close"
+  >
+    x
+  </button>
+</div>
+</div>
+
+<ng-toast [style]="{ width: '300px' }"></ng-toast>
+<app-payment-form [openModalTrigger]="openLoginModal"  [Url]="Url"></app-payment-form>

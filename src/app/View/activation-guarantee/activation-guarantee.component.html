@@ -1,0 +1,72 @@
+<div class="image-container ">
+    <img src="assets/img/banerr-car.jpg" alt="Product with Car">
+    <div class="overlay ">
+
+        <div class="container px-16 items-center m-auto">
+            <img src="assets/img/Artboard.jpg" alt="Lozan Logo" class="logo">
+
+         <h2 class="  m-auto items-center col-lg-8 col-sm-11 mt-3" ><strong>تفعيل <span>الضمان</span></strong></h2>
+         <h1 class="highlight m-auto col-lg-8 col-sm-11 mt-3" >لا تترك منتجك بلا حماية! فعّل ضمانك اليوم وتمتع براحة البال والدعم عند الحاجة</h1>
+         <div class="row mt-5 col-8 m-auto">
+            <h2>من أين تم الشراء المنتج؟
+            </h2>
+            <div class="d-flex flex-row pb-3 mt-2">
+                <div class="rounded border border-primary border-2 d-flex  p-2 align-items-center"
+                  style="background-color: rgba(18, 101, 241, 0.07);">
+                  <div class="d-flex align-items-center pe-3">
+                    <input class="form-check-input"   type="radio" name="paymentTypeId" id="radioNoLabel11"
+                       aria-label="..."  />
+                  </div>
+                  <div class="d-flex flex-column mx-4">
+                    المتجر الالكتروني
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex flex-row pb-3">
+                <div class="rounded border border-primary border-2 d-flex  p-2 align-items-center"
+                  style="background-color: rgba(18, 101, 241, 0.07);">
+                  <div class="d-flex align-items-center pe-3">
+                    <input class="form-check-input"  type="radio" name="paymentTypeId" id="radioNoLabel11"
+                       aria-label="..."  />
+                  </div>
+                  <div class="d-flex flex-column mx-4">
+                    نقطة بيع معتمدة
+                  </div>
+                </div>
+              </div>
+
+
+            
+            <div class="col-lg-12 col-sm-12 mt-5">
+                <div class="mb-3 col-lg-5 col-sm-11">
+                    <label for="home" class="block text-white mb-2 text-sm font-medium text-gray-900 dark:text-black text-2xl"> الهاتف*</label>
+                    <input   type="text" id="home" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required />
+                </div>
+
+            </div>
+            <div class="col-lg-12 col-sm-12 mt-5">
+                <div class="mb-3 col-lg-5 col-sm-11">
+                    <label for="home" class="block text-white mb-2 text-sm font-medium text-gray-900 dark:text-black text-2xl"> تاريخ الشراء
+                        *</label>
+                    <input  type="date" id="home" class=" input1 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  required />
+                </div>
+
+            </div>
+
+            
+            <div class="col-12">
+
+                <button style="background-color: rgb(121, 87, 255); width: 200px;" (click)="SaveData()" class=" justify-center rounded-lg bg-red-600 px-5 py-2.5  font-medium  text-white hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-red-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                    استمرار
+                    <i class="fas fa-long-arrow-alt-left"></i>
+                  </button>
+            </div>
+
+         </div>
+
+        </div>
+      
+    </div>
+  </div>
+  <ng-toast [style]="{width:'300px'}"></ng-toast>
